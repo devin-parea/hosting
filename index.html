@@ -1,156 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>PAREAi Upload</title>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline'; script-src 'self' 'unsafe-inline';">
- <style>
-  /* MOBILE-FIRST LAYOUT — built for Glide */
-  body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(180deg, #f6f5f3 0%, #ffffff 100%);
-    font-family: 'Montserrat', sans-serif;
-    color: #2d2d2d;
-    text-align: center;
-  }
-
-  #pareai-upload {
-    padding: 5rem 1.5rem;
-  }
-
-  h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3.6rem;
-    line-height: 1.1;
-    margin-bottom: 1rem;
-  }
-
-  p {
-    font-size: 1.5rem;
-    line-height: 1.5;
-    margin-bottom: 1.5rem;
-  }
-
-  #upload-box {
-    border: 2px dashed #c1a875;
-    border-radius: 16px;
-    padding: 3rem 1.5rem;
-    background: #fff;
-    box-shadow: 0 0 15px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-  }
-
-  button {
-    background: #2d2d2d;
-    color: #c1a875;
-    padding: 1rem 3rem;
-    border: none;
-    border-radius: 50px;
-    font-size: 1.6rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  button:hover {
-    opacity: 0.9;
-  }
-
-  /* Give it a little breathing room on desktop, that’s it */
-  @media (min-width: 700px) {
-    #pareai-upload {
-      padding: 8rem 2rem;
-      max-width: 480px;
-      margin: 0 auto;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PAREAi Upload Box</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: transparent;
+      font-family: 'Montserrat', sans-serif;
     }
-    h2 {
-      font-size: 5rem;
+
+    #upload-box {
+      position: relative;
+      border: 2px dashed #c1a875;
+      border-radius: 20px;
+      padding: 4rem 2rem;
+      background: #ffffff;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 360px;
+      text-align: center;
     }
-  }
-</style>
+
+    /* lil trust flex */
+    #secure-tag {
+      position: absolute;
+      top: -2rem;
+      right: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 1.3rem;
+      color: #47584e;
+      background: #ffffff;
+      padding: 0.2rem 0.8rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.08);
+    }
+
+    input[type="file"] {
+      width: 100%;
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    button {
+      background: #2d2d2d;
+      color: #c1a875;
+      padding: 1rem 3rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.4rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    #success {
+      display: none;
+      margin-top: 2rem;
+      font-size: 1.6rem;
+      color: #47584e;
+    }
+
+    #error {
+      display: none;
+      color: #d33;
+      font-size: 1.4rem;
+      margin-top: 0.5rem;
+    }
+  </style>
 </head>
 <body>
-  <!-- PAREAi. UPLOAD PAGE -->
-  <section id="pareai-upload" style="background:linear-gradient(180deg,#f6f5f3 0%,#ffffff 100%);padding:8rem 2rem;text-align:center;font-family:'Montserrat',sans-serif;color:#2d2d2d;">
-    <div style="max-width:800px;margin:0 auto;">
+  <div id="upload-box">
+    <div id="secure-tag">🔒 Encrypted Upload</div>
+    <input id="csvFile" type="file" accept=".csv" />
+    <p id="error"></p>
+    <button id="uploadBtn">Upload</button>
+    <div id="success">✅ File received.</div>
+  </div>
 
-      <!-- HEADER -->
-      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:7rem;margin-bottom:1rem;">
-        <span style="color:#c1a875;">PAREAi.</span> Upload —<br>We’ll Take It From Here
-      </h2>
-      <p style="font-size:1.8rem;margin-bottom:1.5rem;">Upload your reservation or guest logs below.</p>
-      <p style="font-size:1.6rem;color:#47584e;margin-bottom:4rem;">
-        Please name your file as <strong style="color:#c1a875;">restaurantphonenumber.resos.csv</strong><br>(example: <em>5551234567.resos.csv</em>)
-      </p>
-
-      <!-- UPLOAD BOX -->
-      <div id="upload-box" style="position:relative;border:2px dashed #c1a875;border-radius:20px;padding:5rem 2rem;background:#fff;box-shadow:0 0 25px rgba(0,0,0,0.1);transition:all .3s ease;">
-        <div style="position:absolute;top:-2.4rem;right:1.5rem;display:flex;align-items:center;gap:0.5rem;font-size:1.4rem;color:#47584e;">
-          🔒 <span>Encrypted Upload</span>
-        </div>
-        <input id="csvFile" type="file" accept=".csv" style="margin-bottom:2rem;font-size:1.6rem;" />
-        <p id="error" style="color:#d33;font-size:1.5rem;display:none;">File name must end with <strong>.resos.csv</strong></p>
-        <button id="uploadBtn" style="background:#2d2d2d;color:#c1a875;padding:1rem 3rem;border:none;border-radius:50px;font-size:1.6rem;font-weight:600;cursor:pointer;transition:all .3s ease;">Upload</button>
-
-        <!-- SUCCESS MESSAGE -->
-        <div id="success" style="display:none;margin-top:3rem;opacity:0;transition:opacity 0.8s ease;">
-          <div style="font-size:3rem;">✅</div>
-          <p style="font-size:1.8rem;color:#47584e;margin-top:0.5rem;">Got it. We’ll handle the rest.</p>
-        </div>
-      </div>
-
-    </div>
-  </section>
-  
   <script>
-  document.getElementById('uploadBtn').addEventListener('click', async () => {
-    const fileInput = document.getElementById('csvFile');
-    const file = fileInput.files[0];
-    const error = document.getElementById('error');
-    const success = document.getElementById('success');
-    const uploadBox = document.getElementById('upload-box');
+    document.getElementById('uploadBtn').addEventListener('click', async () => {
+      const fileInput = document.getElementById('csvFile');
+      const file = fileInput.files[0];
+      const error = document.getElementById('error');
+      const success = document.getElementById('success');
+      const uploadBox = document.getElementById('upload-box');
 
-    if (!file) {
-      error.style.display = 'block';
-      error.textContent = 'Please select a file.';
-      return;
-    }
-
-    if (!/resos\.csv$/i.test(file.name)) {
-      error.style.display = 'block';
-      error.textContent = 'File name must end with .resos.csv';
-      return;
-    }
-
-    error.style.display = 'none';
-
-    // Prepare for upload
-    const formData = new FormData();
-    formData.append('file', file);
-
-    // 🔗 PLACEHOLDER FOR YOUR DESTINATION WEBHOOK URL
-    const webhookUrl = 'https://pareacollective.app.n8n.cloud/webhook/file-upload';
-
-    try {
-      const response = await fetch(webhookUrl, {
-        method: 'POST',
-        body: formData
-      });
-      if (response.ok) {
-        uploadBox.style.borderColor = '#47584e';
-        success.style.display = 'block';
-        setTimeout(() => { success.style.opacity = 1; }, 100);
-      } else {
+      if (!file) {
         error.style.display = 'block';
-        error.textContent = 'Upload failed. Please try again.';
+        error.textContent = 'Please select a file.';
+        return;
       }
-    } catch (err) {
-      error.style.display = 'block';
-      error.textContent = 'Network error. Please try again.';
-    }
-  });
+
+      if (!/resos\.csv$/i.test(file.name)) {
+        error.style.display = 'block';
+        error.textContent = 'Invalid name. Must end with .resos.csv';
+        return;
+      }
+
+      error.style.display = 'none';
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const webhookUrl = 'https://pareacollective.app.n8n.cloud/webhook/file-upload';
+
+      try {
+        const response = await fetch(webhookUrl, {
+          method: 'POST',
+          body: formData
+        });
+
+        if (response.ok) {
+          uploadBox.style.borderColor = '#47584e';
+          success.style.display = 'block';
+        } else {
+          error.style.display = 'block';
+          error.textContent = 'Upload failed. Try again.';
+        }
+      } catch (err) {
+        error.style.display = 'block';
+        error.textContent = 'Network error. Try again.';
+      }
+    });
   </script>
 </body>
 </html>
+
