@@ -5,6 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>PAREAi Upload</title>
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline'; script-src 'self' 'unsafe-inline';">
+ <style>
+    /* Global scaling fix for Glide embeds */
+    #pareai-upload {
+      transform: scale(0.9);
+      transform-origin: top center;
+    }
+
+    @media (max-width: 600px) {
+      /* Shrink slightly more on small screens */
+      #pareai-upload {
+        transform: scale(0.85);
+        transform-origin: top center;
+      }
+
+      /* Your mobile-specific tweaks */
+      section#pareai-upload {
+        padding: 4rem 1rem;
+      }
+      h2 {
+        font-size: 3.6rem !important;
+      }
+      p {
+        font-size: 1.4rem !important;
+      }
+      #upload-box {
+        padding: 3rem 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- PAREAi. UPLOAD PAGE -->
@@ -38,24 +67,7 @@
 
     </div>
   </section>
-
-<style>
-  @media (max-width: 600px) {
-    section#pareai-upload {
-      padding: 4rem 1rem;
-    }
-    h2 {
-      font-size: 3.6rem !important;
-    }
-    p {
-      font-size: 1.4rem !important;
-    }
-    #upload-box {
-      padding: 3rem 1rem;
-    }
-  }
-</style>
-
+  
   <script>
   document.getElementById('uploadBtn').addEventListener('click', async () => {
     const fileInput = document.getElementById('csvFile');
